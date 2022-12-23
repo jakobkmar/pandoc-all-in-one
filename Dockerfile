@@ -3,7 +3,7 @@ FROM haskell:latest as builder
 RUN cabal update && cabal install --lib pandoc-types base64
 
 COPY . .
-RUN ghc -package-env=default --make filters/include.hs -no-keep-hi-files -no-keep-o-files
+RUN ./filters/compile.sh
 
 
 FROM fedora:latest
