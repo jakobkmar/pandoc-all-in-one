@@ -5,6 +5,7 @@ import System.Directory
 import System.IO
 import System.Process
 import Text.Pandoc.JSON
+import Data.Maybe
 
 readFileBase64 :: FilePath -> IO T.Text
 readFileBase64 filePath = do
@@ -25,8 +26,10 @@ renderMermaid cb@(CodeBlock (id, classes, namevals) contents)
 
       writeFile tempFileIn (T.unpack contents)
 
+      let width = fromMaybe (T.pack "400") (lookup (T.pack "width") namevals)
+
       -- execute mermaid-cli
-      let mermaidCliArgs = ["-i", tempFileIn, "-o", tempFileOut, "--puppeteerConfigFile", "/resources/.puppeteer.json", "--pdfFit", "-w", "300"]
+      let mermaidCliArgs = ["-i", tempFileIn, "-o", tempFileOut, "--puppeteerConfigFile", "/resources/.puppeteer.json", "--pdfFit", "-w", T.unpack width]
       hPutStrLn stderr ("[Mermaid Filter] Executing mermaid-cli with the following args: " <> unwords mermaidCliArgs)
       readProcess "mmdc" mermaidCliArgs ""
       hPutStrLn stderr "[Mermaid Filter] Finished executing mermaid-cli"
