@@ -21,13 +21,12 @@ renderMermaid cb@(CodeBlock (id, classes, namevals) contents)
       createDirectoryIfMissing False mermaidTempDir
       
       let tempFileIn = mermaidTempDir ++ "/mermaid-temp-input.mmd"
-      let tempFileOut = mermaidTempDir ++ "mermaid-temp-output.pdf"
+      let tempFileOut = mermaidTempDir ++ "/mermaid-temp-output.pdf"
 
       writeFile tempFileIn (T.unpack contents)
 
       -- execute mermaid-cli
       let mermaidCliArgs = ["-i", tempFileIn, "-o", tempFileOut, "--puppeteerConfigFile", "/resources/.puppeteer.json", "--pdfFit", "-w", "300"]
-      
       hPutStrLn stderr ("[Mermaid Filter] Executing mermaid-cli with the following args: " <> unwords mermaidCliArgs)
       readProcess "mmdc" mermaidCliArgs ""
       hPutStrLn stderr "[Mermaid Filter] Finished executing mermaid-cli"
@@ -37,8 +36,8 @@ renderMermaid cb@(CodeBlock (id, classes, namevals) contents)
 
       -- cleanup temp files
       removeFile tempFileIn
-      removeFile tempFileOut
-      removeDirectory mermaidTempDir
+      -- removeFile tempFileOut
+      -- removeDirectory mermaidTempDir
       
       --                           \/ TODO allow to pass classes
       return (Para [Image (id, [], []) [Str (T.pack "Placeholder Caption")] (T.pack tempFileOut, T.pack "title")])
