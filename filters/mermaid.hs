@@ -15,18 +15,23 @@ renderMermaid :: Block -> IO Block
 renderMermaid cb@(CodeBlock (id, classes, namevals) contents)
   | T.pack ".mermaid" `elem` classes = do
       systemTempDir <- getTemporaryDirectory
-      let tempDir = systemTempDir ++ "/mermaid-tmp"
-      -- create a temporary file to write the input to
-      (tempFileIn, tempHandleIn) <- openTempFile tempDir "mermaid-temp-input.svg"
-      -- create a temporary file to save the svg to
-      (tempFileOut, tempHandleOut) <- openTempFile tempDir "mermaid-temp-output.svg"
+      let mermaidTempDir = systemTempDir ++ "/mermaid-tmp"
+      createDirectoryIfMissing False mermaidTempDir
+      
+      let tempFileIn = mermaidTempDir ++ "/mermaid-temp-input.mmd"
+      let tempFileOut = mermaidTempDir ++ "/mermaid-temp-output.svg"
+
+      writeFile tempFileIn (T.unpack contents)
 
       -- execute mermaid-cli
       readProcess "mmdc" ["-i", tempFileIn, "-o", tempFileOut] ""
 
       base64Content <- readFileBase64 tempFileOut
 
-      removeDirectory tempDir
+      -- cleanup temp files
+      removeFile tempFileIn
+      removeFile tempFileOut
+      removeDirectory mermaidTempDir
 
       --                           \/ TODO allow to pass classes
       return (Para [Image (id, [], []) [Str (T.pack "Test Caption")] (base64Content, T.pack "fig:title")])
