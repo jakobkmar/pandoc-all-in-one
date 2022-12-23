@@ -13,20 +13,18 @@ ENV CHROME_BIN="/usr/bin/chromium-browser" \
 
 RUN dnf update -y
 
-RUN dnf install -y pandoc
-# TeX
-RUN dnf install -y texlive-scheme-full
-# conversion
-RUN dnf install -y librsvg2 ghostscript
-
-# some js filters
+RUN dnf install -y pandoc texlive-scheme-full
 RUN dnf install -y chromium yarnpkg
+
 RUN yarnpkg global add @mermaid-js/mermaid-cli
 
-COPY --from=builder filters /filters
+# conversion
+RUN dnf install -y librsvg2 librsvg2-tools ghostscript wkhtmltopdf R-rsvg
 
-COPY docker/resources /resources
-COPY docker/entrypoint.sh /run
+COPY --from=builder filters filters/
+
+COPY docker/resources resources/
+COPY docker/entrypoint.sh run/
 RUN chmod +x /run/entrypoint.sh
 
 WORKDIR /data
