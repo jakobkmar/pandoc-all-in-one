@@ -11,9 +11,10 @@ FROM fedora:latest
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
 
+RUN echo "max_parallel_downloads=10" >> /etc/dnf/dnf.conf
 RUN dnf update -y
 
-RUN dnf install -y pandoc texlive-scheme-full
+RUN dnf install -y pandoc texlive-scheme-basic
 RUN dnf install -y chromium yarnpkg
 
 RUN yarnpkg global add @mermaid-js/mermaid-cli

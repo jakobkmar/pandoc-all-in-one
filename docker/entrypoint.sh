@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/bin/pandoc \
+pandoc \
   -F /filters/mermaid \
   -F /filters/include \
   "$@"
