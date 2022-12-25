@@ -32,17 +32,27 @@ To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/ma
 
 ## Filters
 
+### Mermaid Diagrams
+
 To use the mermaid filter, create a code block like this
 
 ```pandoc
 ~~~{.mermaid width=350}
-flowchart TB
+flowchart LR
   A["Create a chart"] --> B["Never look at it again"]
 ~~~
 ```
 All parameters after `.mermaid` are optional.
 
-To include files, you can also use a code block
+Result:
+```mermaid
+flowchart LR
+  A["Create a chart"] --> B["Never look at it again"]
+```
+
+### Include files
+
+To include external files, you can also use a code block
 ```pandoc
 ~~~{include="my_file.c"}
 This is the placeholder for an external file.
