@@ -1,6 +1,6 @@
 # pandoc-all-in-one
 
-All-in-one Docker image for [`pandoc`](https://pandoc.org/), see [goals](#goals), including:
+All-in-one Docker image for [`pandoc`](https://pandoc.org/) (see [goals](#goals)) including:
   - custom bundled filters:
     - [**Mermaid Filter**](https://mermaid.js.org/)
     - a filter for including external files in your document
