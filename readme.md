@@ -8,7 +8,7 @@ All-in-one Docker image for [`pandoc`](https://pandoc.org/) (see [goals](#goals)
   - pre-installed dependencies:
     - **TeXLive**
     - wkhtmltopdf
-    - livrsvg, ghostscript
+    - librsvg, ghostscript
   - utilities for your working environment:
     - `--watch` flag for the pandoc command, keeping the process alive and recompiling on changes
 
@@ -68,7 +68,7 @@ The following flags are available:
 ## Goals
 
 This project aims to provide an extremely effortless distribution of pandoc, which has:
-- all necessery dependencies pre installed
+- all necessary dependencies pre-installed
 - commonly used filters pre-applied
 - utilities for the development environment of your document included
 - use LaTeX math whenever you need it
