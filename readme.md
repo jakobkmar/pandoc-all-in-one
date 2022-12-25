@@ -43,10 +43,12 @@ flowchart TB
 All parameters after `.mermaid` are optional.
 
 To include files, you can also use a code block
-```{include="my_file.c"}
+```pandoc
+~~~{include="my_file.c"}
 This is the placeholder for an external file.
+~~~
 ```
-Optionally, you can specify the language using `.lang` before the include parameter.
+Optionally, you can specify the language explicitly using `.lang` before the include parameter.
 
 ## Flags
 
