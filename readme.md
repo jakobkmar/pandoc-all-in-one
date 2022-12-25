@@ -1,6 +1,6 @@
 # pandoc-all-in-one
 
-All-in-one Docker image for [`pandoc`](https://pandoc.org/), including:
+All-in-one Docker image for [`pandoc`](https://pandoc.org/), see [goals](#goals), including:
   - custom bundled filters:
     - [**Mermaid Filter**](https://mermaid.js.org/)
     - a filter for including external files in your document
@@ -34,6 +34,18 @@ To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/ma
 
 The following flags are available:
 - `--watch` - the process will keep running, if you write a new change to document pandoc will be rerun
+
+## Goals
+
+This project aims to provide an extremely effortless distribution of pandoc, which has:
+- all necessery dependencies pre installed
+- commonly used filters pre-applied
+- utilities for the development environment of your document included
+- use LaTeX math whenever you need it
+
+You should be able to create a markdown file, just run one command and have an editor, live preview and the actual output all available in seconds.
+This allows you to take notes quickly, create presentations using the `-t beamer` flag and visualize your thoughts on the fly in graphs, and more!
+And all of this using the editor of your choice - no more random online editors.
 
 ## Planned
 
