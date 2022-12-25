@@ -30,6 +30,24 @@ docker run --rm -it -v "$(pwd):/data" jakobkmar/pandoc-all-in-one
 
 To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/man1/alias.1p.html) (`alias pandoc='...'`).
 
+## Filters
+
+To use the mermaid filter, create a code block like this
+
+```pandoc
+~~~{.mermaid width=350}
+flowchart TB
+  A["Create a chart"] --> B["Never look at it again"]
+~~~
+```
+All parameters after `.mermaid` are optional.
+
+To include files, you can also use a code block
+```{include="my_file.c"}
+This is the placeholder for an external file.
+```
+Optionally, you can specify the language using `.lang` before the include parameter.
+
 ## Flags
 
 The following flags are available:
