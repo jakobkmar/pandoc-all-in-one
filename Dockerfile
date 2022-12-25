@@ -1,6 +1,6 @@
 FROM haskell:latest as builder
 
-RUN cabal update && cabal install --lib pandoc-types base64
+RUN cabal update && cabal install --lib pandoc-types base64 temporary
 
 COPY filters filters
 RUN ./filters/compile.sh
