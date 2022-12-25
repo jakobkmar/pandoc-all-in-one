@@ -25,6 +25,7 @@ runPandoc() {
 
 if [[ $watchForChanges == true ]]; then
   echo "Running pandoc and watching for changes of file $watchFile"
+  runPandoc "$@"
   while inotifywait -e close_write "$watchFile"; do
     runPandoc "$@"
   done
