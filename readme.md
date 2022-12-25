@@ -31,7 +31,7 @@ To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/ma
 ## Flags
 
 The following flags are available:
-- `watch` - the process will keep running, if you write a new change to document pandoc will be rerun
+- `--watch` - the process will keep running, if you write a new change to document pandoc will be rerun
 
 ## Planned
 
