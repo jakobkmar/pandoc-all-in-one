@@ -24,6 +24,8 @@ RUN dnf install -y inotify-tools
 # conversion
 RUN dnf install -y librsvg2 librsvg2-tools ghostscript wkhtmltopdf R-rsvg
 
+RUN git clone https://github.com/pandoc/lua-filters.git /root/.local/share/pandoc/filters/
+
 COPY --from=builder filters /filters/
 
 COPY docker/resources /resources/

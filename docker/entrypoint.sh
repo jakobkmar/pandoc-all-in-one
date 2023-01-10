@@ -18,8 +18,8 @@ done
 
 runPandoc() {
   pandoc \
+    -L include-code-files/include-code-files.lua \
     -F /filters/mermaid \
-    -F /filters/include \
     "$@"  
 }
 
