@@ -4,7 +4,8 @@ All-in-one Docker image for [`pandoc`](https://pandoc.org/) (see [goals](#goals)
   - custom bundled filters:
     - [**Mermaid Filter**](https://mermaid.js.org/)
     - a filter for including external files in your document
-    - (it is planned to bundle some lua filters from the lua-filters repository, e.g. the [diagram filter](https://github.com/pandoc/lua-filters/tree/master/diagram-generator))
+    - all official [lua-filters](https://github.com/pandoc/lua-filters) are bundled
+      - `diagram-generator` is already enabled by default
   - pre-installed dependencies:
     - **TeXLive**
     - wkhtmltopdf
