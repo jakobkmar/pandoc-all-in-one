@@ -18,9 +18,9 @@ done
 
 runPandoc() {
   pandoc \
+    -L /filters/mermaid.lua \
     -L include-code-files/include-code-files.lua \
     -L diagram-generator/diagram-generator.lua \
-    -F /filters/mermaid \
     "$@"  
 }
 
