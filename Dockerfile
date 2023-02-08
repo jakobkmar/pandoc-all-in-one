@@ -10,6 +10,9 @@ RUN dnf install -y texlive-scheme-medium
 RUN dnf install -y chromium yarnpkg
 
 RUN yarnpkg global add @mermaid-js/mermaid-cli
+RUN dnf install -y plantuml
+RUN dnf install -y python3 python3-matplotlib python3-numpy
+RUN dnf install -y graphviz
 
 # tools
 RUN dnf install -y inotify-tools wget tree
@@ -28,15 +31,26 @@ RUN tar xvzf /download/pandoc.tar.gz --strip-components 1 -C /usr/local/
 # clean manual download directory
 RUN rm -rf /download/
 
-RUN git clone https://github.com/pandoc/lua-filters.git /root/.local/share/pandoc/filters/
+ARG PANDOC_DATA_DIR=/root/.local/share/pandoc
 
-COPY filters/*.lua /filters/
-RUN tree /filters/
+# install to data-dir
+## lua-filters repository 
+RUN git clone https://github.com/pandoc/lua-filters.git $PANDOC_DATA_DIR/filters/
+RUN find $PANDOC_DATA_DIR/filters/ -type f \! \( -name *.lua \) -exec rm {} ';'
+## custom filters
+COPY filters/*.lua $PANDOC_DATA_DIR/filters/
+## list result
+RUN tree $PANDOC_DATA_DIR
+
+# custom stylesheets
+COPY styles/*.css /styles/
 
 COPY docker/resources /resources/
 COPY docker/entrypoint.sh /run/
 RUN chmod +x /run/entrypoint.sh
 
 WORKDIR /data
+
+ENV PLANTUML="/usr/share/java/plantuml.jar"
 
 ENTRYPOINT ["/run/entrypoint.sh"]
