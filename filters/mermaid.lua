@@ -53,13 +53,13 @@ local filetype = "svg"
 local mimetype = "image/svg+xml"
 
 -- TODO temporary test variables
-local caption_or_alt = "Alt (or Caption?) Text"
+local alt_text = "Alt Text"
 local caption = "Caption Text"
 local title = "Title Text"
 local figure_attrs = {}
 
 function CodeBlock(code_block)
-  if not code_block.classes[1] == "mermaid" then
+  if code_block.classes[1] ~= "mermaid" then
     return nil
   end
 
@@ -79,7 +79,7 @@ function CodeBlock(code_block)
       height = code_block.attributes.height,
   }
 
-  local image_obj = pandoc.Image(caption_or_alt, fname, title, image_attrs)
+  local image_obj = pandoc.Image(alt_text, fname, title, image_attrs)
 
   return pandoc.Figure(image_obj, pandoc.Blocks {}, figure_attrs)
 end
