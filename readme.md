@@ -5,31 +5,47 @@ All-in-one Docker image for [`pandoc`](https://pandoc.org/) (see [goals](#goals)
     - [**Mermaid Filter**](https://mermaid.js.org/)
     - a filter for including external files in your document
     - all official [lua-filters](https://github.com/pandoc/lua-filters) are bundled
-      - `diagram-generator` is already enabled by default
+      - `diagram-generator` is already enabled by default, which includes
+        - plantuml, graphviz, tikz
+        - python runner (python3, matplotlib and numpy are bundled with the image)
   - pre-installed dependencies:
     - **TeXLive**
     - wkhtmltopdf
-    - librsvg, ghostscript
+    - librsvg, ghostscript, inkscape
   - utilities for your working environment:
-    - `--watch` flag for the pandoc command, keeping the process alive and recompiling on changes
+    - **`--watch`** flag for the pandoc command, keeping the process alive and recompiling on changes
 
 *This image is work in progress.*
 
 ## Installation
 
-To use this image just run
+### Linux
+
+To use this image simply create an [`alias`](https://man7.org/linux/man-pages/man1/alias.1p.html) (`alias pandoc='...'`).
 
 with [**Podman**](https://podman.io/)
 ```bash
-podman run --rm -it -v "$(pwd):/data:z" jakobkmar/pandoc-all-in-one
+alias pandoc='podman run --rm -it -v "$(pwd):/data:z" jakobkmar/pandoc-all-in-one'
 ```
 
 with [**Docker**](https://www.docker.com/)
 ```bash
-docker run --rm -it -v "$(pwd):/data" jakobkmar/pandoc-all-in-one
+alias pandoc='docker run --rm -it -v "$(pwd):/data" jakobkmar/pandoc-all-in-one'
 ```
 
-To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/man1/alias.1p.html) (`alias pandoc='...'`).
+(Add the alias to your `.bashrc` or `.zshrc`)
+
+### Windows
+
+To set an alias on Windows, create a file called `$HOME/Document/profile.ps1` and insert the following content
+
+```powershell
+function RunPandoc {
+    docker run --rm -it -v "$(pwd):/data" jakobkmar/pandoc-all-in-one
+}
+
+Set-Alias pandoc RunPandoc
+```
 
 ## Filters
 
@@ -38,7 +54,7 @@ To shorten that process, create an [`alias`](https://man7.org/linux/man-pages/ma
 To use the mermaid filter, create a code block like this
 
 ```pandoc
-~~~{.mermaid width=350}
+~~~mermaid {width=350}
 flowchart LR
   A["Create a chart"] --> B["Never look at it again"]
 ~~~
@@ -55,7 +71,7 @@ flowchart LR
 
 To include external files, you can also use a code block
 ```pandoc
-~~~{include="my_file.c"}
+~~~c {include="my_file.c"}
 This is the placeholder for an external file.
 ~~~
 ```
