@@ -77,6 +77,7 @@ function CodeBlock(code_block)
   local image_attrs = {
       width = code_block.attributes.width,
       height = code_block.attributes.height,
+      style = code_block.attributes.style,
   }
 
   local image_obj = pandoc.Image(alt_text, fname, title, image_attrs)
