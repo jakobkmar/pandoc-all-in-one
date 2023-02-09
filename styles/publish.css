@@ -59,8 +59,7 @@ td, th {
 }
 
 img {
-  width: max(32em, 60%);
-  max-width: 100%;
+  max-width: min(max(32em, 60%), 100%);
 }
 
 figure {
