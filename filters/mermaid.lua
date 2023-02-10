@@ -19,7 +19,7 @@ local function file_exists(name)
   end
 end
 
-local function convert(source_code)
+local function convert(source_code, attributes)
   return with_tmp_dir(
           "mermaid",
           function()
@@ -30,6 +30,10 @@ local function convert(source_code)
             local puppeteer_config = "/resources/.puppeteer.json"
             if file_exists(puppeteer_config) then
               mermaid_args = { "--puppeteerConfigFile", puppeteer_config, table.unpack(mermaid_args) }
+            end
+
+            if attributes.theme ~= nil then
+              mermaid_args = { "--theme", attributes.theme, table.unpack(mermaid_args) }
             end
 
             pandoc.pipe("mmdc", mermaid_args, source_code)
@@ -63,7 +67,7 @@ function CodeBlock(code_block)
     return nil
   end
 
-  local convert_success, img = pcall(convert, code_block.text)
+  local convert_success, img = pcall(convert, code_block.text, code_block.attributes)
   if not convert_success then
     -- io.stderr:write(tostring(img or "Mermaid conversion returned no data"))
     io.stderr:write(tostring(img) .. "\n")
